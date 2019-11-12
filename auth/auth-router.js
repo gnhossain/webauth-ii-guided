@@ -11,6 +11,7 @@ router.post('/register', (req, res) => {
 
   Users.add(user)
     .then(saved => {
+      req.session.username = saved.username;
       res.status(201).json(saved);
     })
     .catch(error => {
@@ -36,5 +37,13 @@ router.post('/login', (req, res) => {
       res.status(500).json(error);
     });
 });
+
+router.get('/logout', req,res) => {
+  if(req.session){
+    req.session.destroy();
+    res.status(200).json({ message:"logged out successfully"})
+
+  }
+}
 
 module.exports = router;

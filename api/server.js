@@ -1,11 +1,22 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const KnexSessionStorage = require("connect-session-knex")(session)
 
 const authRouter = require('../auth/auth-router.js');
 const usersRouter = require('../users/users-router.js');
 
 const server = express();
+const sessionConfiguration = {
+  name: "booger",
+  secret: process.env.COOKIE_SECRET || "is it secret? is it safe",
+  cookie: {
+    masAge: 1000 * 60 * 60,
+    secure:process.env.NODE
+  }
+},
+resave:false,
+save
 
 server.use(helmet());
 server.use(express.json());
